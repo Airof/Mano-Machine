@@ -2,6 +2,10 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 -- use IEEE.numeric_std.all;
 
+
+-- one bit memory cell(SR latch)
+-- its used for storing data and has two options
+--R='1' => Reading from the input // R='0' writing to the output
 entity BC is
     port (
         cell_input, R, sel: in std_logic;
@@ -10,6 +14,9 @@ entity BC is
 end entity BC;
 
 architecture behavorial of BC is
+
+--used components: SR as an memory cell
+    
     component SR is 
     port (
         S,R: in std_logic;
@@ -31,6 +38,22 @@ begin
     
     
 end architecture behavorial;
+
+
+--                    block diagram
+
+--                       select
+--                         |
+--                     ____|____
+--      input    ______|        |
+--                     |   BC   |_____output   
+--                     |________|   
+--                         |             
+--             Read/Write _|
+
+
+
+
 
 -- BC: This is a binary cell circuit (BC), used for memory cells in RAM.
 

@@ -3,6 +3,9 @@ use IEEE.std_logic_1164.all;
 -- use IEEE.numeric_std.all;
 
 
+-- logical calculator
+-- can calculate proimary logic operation for a single Bit
+-- supported op => AND OR XOR NOT 
 entity logicX1 is
     port (
         S: in std_logic_vector(1 downto 0);
@@ -12,6 +15,10 @@ entity logicX1 is
 end entity logicX1;
 
 architecture Behavorial of LogicX1 is
+
+-- component used => MUX4to1 for selecting operatins
+-- signals used => opr for sending the operation values to selector
+
     component MUX4to1 is
         port (
             input : in std_logic_vector(3 downto 0);
@@ -23,13 +30,15 @@ architecture Behavorial of LogicX1 is
     signal opr: std_logic_vector(3 downto 0);
     
 begin
+
     
+    -- calculating the operations
     opr(0) <= A and B;
     opr(1) <= A or B;
     opr(2) <= A xor B;
     opr(3) <= NOT A;
 
-
+    -- selecting the operations
     operation_detect: MUX4to1 port map(
         Sel => S,
         input => opr,

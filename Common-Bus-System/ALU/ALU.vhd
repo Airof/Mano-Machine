@@ -2,7 +2,8 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 -- use IEEE.numeric_std.all;
 
-
+-- ALU consists of arithmetic, logic, and shift units.  
+-- Uses a multiplexer to select the final result based on S(3:2).
 entity ALU is
     port (
         S : in std_logic_vector(3 downto 0);
@@ -14,10 +15,20 @@ entity ALU is
 end entity ALU;
 
 
-
 architecture Behavorial of ALU is
-
-    
+-- ==========================================================================|
+-- Components:                                                               |               
+-- - Arithmatic: Handles addition, subtraction, increment, and decrement.    |                     
+-- - LOGIC: Performs bitwise operations (AND, OR, XOR, NOT).                 |                
+-- - ShiftLR: Manages logical left and right shifts.                         |                       
+-- - MUX4to1: Selects the final output based on S(3:2).                      |                   
+--                                                                           |     
+-- Signals:                                                                  |
+-- - Arith_val: Stores arithmetic results.                                   |      
+-- - logic_val: Stores logic operation results.                              |  
+-- - shift_val_L: Stores left shift results.                                 |           
+-- - shift_val_R: Stores right shift results.                                |                
+-- ==========================================================================|
     component Arithmatic is
         port (
             A, B: in std_logic_vector(15 downto 0);
@@ -62,7 +73,9 @@ architecture Behavorial of ALU is
     signal shift_val_R: std_logic_vector(15 downto 0);
 
 begin
+
     
+    -- this block handles the mathmatical(Arithmatic) calculations
     Arithmatic_block: Arithmatic port map(
         A => A,
         B => B,
@@ -72,6 +85,7 @@ begin
         D => Arith_val
     );
 
+    -- this block handles the Logical operations    
     Logic_block: LOGIC port map(
         Sel => S(1 downto 0),
         A => A,
@@ -79,19 +93,23 @@ begin
         E=> logic_val
     );
 
+    -- this block handles the Right Shift    
     Shift_Right_block: ShiftLR port map(
         Shift_dir => '0',
         A => A,
         H => shift_val_R
     );
 
-
+    -- this block handles the Left Shift
     Shift_Left_block: ShiftLR port map(
         Shift_dir => '1',
         A => A,
         H => shift_val_L
     );
 
+
+    -- this block handles selection
+    -- read line 148 for the truth table
     FINAL_VALUE_GEN: for i in 0 to 15 generate  
         Final_value: MUX4to1 port map(
             input(0) => Arith_val(i),
@@ -128,25 +146,60 @@ end architecture Behavorial;
 
 
 
-
-
-
-
+-- ==================================================
 -- ALU Control Signals and Operations:
---   S[3:2]  | S[1:0] | Operation        | Description                        
+-- ==================================================
+--   S[3:0]  | cin | Operation        | Description                        
 --  -------------------------------------------------------------------
---      00   | 00     | Addition         | F = A + B                          
---      00   | 01     | Subtraction      | F = A - B                          
---      00   | 10     | Add with Carry   | F = A + B + cin                    
---      00   | 11     | Sub with Borrow  | F = A - B - cin                    
---      01   | 00     | AND              | F = A AND B                        
---      01   | 01     | OR               | F = A OR B                         
---      01   | 10     | XOR              | F = A XOR B                        
---      01   | 11     | NOT A            | F = NOT A                          
---      10   | XX     | Right Shift      | F = A >> 1 (Logical Shift)         
---      11   | XX     | Left Shift       | F = A << 1 (Logical Shift)         
+--    0000   |  0  | Transfer A       | F = A                           
+--    0000   |  1  | Increment A      | F = A + 1                       
+--    0001   |  0  | Addition         | F = A + B                       
+--    0001   |  1  | Add with Carry   | F = A + B + 1                   
+--    0010   |  0  | Subtract w/borrow| F = A + NOT(B)                   
+--    0010   |  1  | Subtraction      | F = A + NOT(B) + 1               
+--    0011   |  0  | Decrement A      | F = A - 1                        
+--    0011   |  1  | Transfer A       | F = A                            
+--    0100   |  X  | AND              | F = A AND B                      
+--    0101   |  X  | OR               | F = A OR B                       
+--    0110   |  X  | XOR              | F = A XOR B                      
+--    0111   |  X  | Complement A     | F = NOT A                        
+--    100X   |  X  | Shift Right      | F = SHR(A)                       
+--    110X   |  X  | Shift Left       | F = SHL(A)                        
 
+-- ==================================================
 -- Notes:
--- - 'cin' (carry-in) is only relevant for arithmetic operations.
--- - 'XX' in S[1:0] for shifts means that these bits are ignored.
--- - 'E' (carry-out) is only meaningful for arithmetic operations.
+-- - 'X' means the bit is ignored for that operation.
+-- - 'cin' is only relevant for arithmetic operations.
+-- - Shifting operations use logical shifts.
+-- - 'E' is only meaningful for arithmetic operations.
+
+-- ==================================================
+-- Used Components:
+-- ==================================================
+-- 1. Arithmatic:
+--    - Performs addition, subtraction, increment, and decrement.
+--    - Inputs: A, B (16-bit), sel (2-bit), cin (1-bit).
+--    - Outputs: D (16-bit), cout (1-bit).
+--
+-- 2. LOGIC:
+--    - Performs bitwise AND, OR, XOR, and NOT operations.
+--    - Inputs: A, B (16-bit), sel (2-bit).
+--    - Outputs: E (16-bit).
+--
+-- 3. ShiftLR:
+--    - Handles logical left and right shifts.
+--    - Inputs: A (16-bit), Shift_dir (1-bit).
+--    - Outputs: H (16-bit).
+--
+-- 4. MUX4to1:
+--    - Selects the final output based on S(3:2).
+--    - Inputs: input (4-bit), sel (2-bit).
+--    - Output: q (1-bit).
+--
+-- ==================================================
+-- Used Signals:
+-- ==================================================
+-- 1. Arith_val (16-bit)  - Holds arithmetic operation result.
+-- 2. logic_val (16-bit)  - Holds logical operation result.
+-- 3. shift_val_L (16-bit) - Holds left shift result.
+-- 4. shift_val_R (16-bit) - Holds right shift result.

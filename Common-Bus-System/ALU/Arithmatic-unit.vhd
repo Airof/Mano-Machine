@@ -2,6 +2,10 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 -- use IEEE.numeric_std.all;
 
+
+-- a normal calculator
+-- can calculate add sub 
+
 entity Arithmatic is
     port (
         A, B: in std_logic_vector(15 downto 0);
@@ -15,6 +19,11 @@ end entity Arithmatic;
 
 
 architecture Behavorial of Arithmatic is
+
+-- Components:
+--   - FullAdder:  A 1-bit full adder used to build a 16-bit adder.
+--   - MUX4to1:    A 4-to-1 multiplexer selects the B input modification.
+-- Signals: NOTB // mux_output // carry
 
     component FullAdder is
         port (
@@ -31,8 +40,8 @@ architecture Behavorial of Arithmatic is
         );
     end component;
 
+    
     signal NOTB: std_logic_vector(15 downto 0);
-
     signal mux_output: std_logic_vector(15 downto 0);
     signal carry: std_logic_vector(16 downto 0);
 begin
@@ -69,22 +78,32 @@ begin
 end architecture Behavorial;
 
 
--- LOGIC: 16-bit logical unit using 1-bit logicX1 components.
+
+-- ==================================================
+-- 16-bit Arithmetic Unit Summary:
+-- ==================================================
+-- - This module performs arithmetic operations on 16-bit inputs A and B.
+-- - The operation is determined by the 2-bit select input (sel) and carry-in (cin).
+-- - Outputs the result (D) and carry-out (cout).
 --
+-- ==================================================
+-- Operation Table:
+-- ==================================================
+-- | sel  | cin | Operation         | Performed Calculation  |
+-- |------|-----|-------------------|------------------------|
+-- | "00" |  0  | Add               | D = A + B             |
+-- | "00" |  1  | Add with carry    | D = A + B + 1         |
+-- | "01" |  0  | Subtract w/borrow | D = A + NOT(B)        |
+-- | "01" |  1  | Subtract          | D = A + NOT(B) + 1    |
+-- | "10" |  0  | Transfer A        | D = A                 |
+-- | "10" |  1  | Increment A       | D = A + 1             |
+-- | "11" |  0  | Decrement A       | D = A - 1             |
+-- | "11" |  1  | Transfer A        | D = A                 |
 --
--- Operation:
---   The design instantiates 16 instances of logicX1, applying the selected
---   logical operation on corresponding bits of A and B.
---
--- The logicX1 component performs a 1-bit logical operation based on Sel:
---
--- Truth Table (for each bit operation):
---   Sel  |  Operation   | ei (Output)
---  -------------------------------
---   "00" |  A AND B    | A AND B
---   "01" |  A OR B     | A OR B
---   "10" |  A XOR B    | A XOR B
---   "11" |  NOT A      | NOT A
---
--- Since this logic is applied to all 16 bits, the entire A and B vectors
--- undergo the selected operation bitwise.
+-- ==================================================
+-- Implementation Details:
+-- ==================================================
+-- - A 4-to-1 multiplexer selects between B, NOT B, '0', or '1'.
+-- - A 16-bit ripple carry adder performs addition or subtraction.
+-- - Carry propagation is handled through chained FullAdder components.
+-- - The module is designed for use in larger ALUs or CPUs.

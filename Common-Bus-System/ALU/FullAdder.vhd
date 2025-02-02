@@ -2,6 +2,8 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 -- use IEEE.numeric_std.all;
 
+-- FA is used for adding 3 single-Bit values
+
 entity FullAdder is
     port (
         cin, A, B : in std_logic;

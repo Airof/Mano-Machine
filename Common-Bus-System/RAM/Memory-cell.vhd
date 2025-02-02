@@ -2,6 +2,8 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 -- use IEEE.numeric_std.all;
 
+
+-- MemoryCell: A 16-bit memory cell using BC latches to store data.
 entity MemoryCell is
     port (
         memory_enable, R_flag: in std_logic;
@@ -20,7 +22,7 @@ architecture behavorial of MemoryCell is
 
 begin
     
-
+    -- using for generate to connect 16 port maps of the Binary cell
     MemoryCell_GEN: for i in 15 downto 0 generate
         cell: BC port map (
             cell_input => input_data(i),
@@ -33,6 +35,3 @@ begin
 end architecture behavorial;
 
 
-
--- MemoryCell: A 16-bit memory cell using BC latches to store data.
--- The output is controlled by the memory_enable and R_flag signals.

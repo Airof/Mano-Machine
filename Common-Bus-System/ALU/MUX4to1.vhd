@@ -2,6 +2,8 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 -- use IEEE.numeric_std.all;
 
+
+-- select one bit out of four
 entity MUX4to1 is
     port (
         input : in std_logic_vector(3 downto 0);
@@ -12,6 +14,8 @@ end entity MUX4to1;
 
 architecture Behavorial of MUX4to1 is
     
+
+    -- using logical getes
 begin
     q <= (input(0) and (NOT sel(1)) and (NOT sel(0))) or
          (input(1) and (NOT sel(1)) and sel(0)) or

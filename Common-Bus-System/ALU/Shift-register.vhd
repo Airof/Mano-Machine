@@ -2,6 +2,9 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 -- use IEEE.numeric_std.all;
 
+
+-- get a 16bit reqister and Left/Right shift it 
+-- Shift_dir = '0' => right // shift_dir = '1' => left 
 entity ShiftLR is
     port (
         Shift_dir: in std_logic; --0 for right // 1 for left

@@ -2,6 +2,10 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 -- use IEEE.numeric_std.all;
 
+
+--SR(set reset) latch
+--latches are used for storing data
+--will be used as memory cells  
 entity SR is
     port (
         S,R: in std_logic;

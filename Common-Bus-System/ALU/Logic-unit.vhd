@@ -2,6 +2,8 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 -- use IEEE.numeric_std.all;
 
+-- logical calculator for 16 Bits
+-- supported op => AND OR XOR NOT 
 entity LOGIC is
     port (
         Sel: in std_logic_vector(1 downto 0);
@@ -11,6 +13,9 @@ entity LOGIC is
 end entity LOGIC;
 
 architecture Behavorial of LOGIC is
+
+-- used components => logicX1 for calculations of each Bit
+
     component logicX1 is
         port (
             S: in std_logic_vector(1 downto 0);
@@ -21,6 +26,8 @@ architecture Behavorial of LOGIC is
 
 begin
 
+
+    -- generator for mapping X16 single-Bit logic units 
     LOGIC_UNIT_GEN: for i in 0 to 15 generate
         logic: logicX1 port map(
             S => Sel,
