@@ -3,7 +3,7 @@ use IEEE.std_logic_1164.all;
 -- use IEEE.numeric_std.all;
 
 
-entity RandomAccessMemory is 
+entity RAM is 
     port(
         addr : in std_logic_vector(11 downto 0);
         input_data : in std_logic_vector(15 downto 0);
@@ -11,9 +11,9 @@ entity RandomAccessMemory is
         memory_enable : in std_logic;
         R_flag : in std_logic
     );
-end entity RandomAccessMemory;
+end entity RAM;
 
-architecture structural of RandomAccessMemory is
+architecture structural of RAM is
 
     component DEC12to4096 is
         port (
@@ -31,10 +31,22 @@ architecture structural of RandomAccessMemory is
         );
     end component;
 
+    component OR_4096 is
+        port (
+            input: in std_logic_vector(4095 downto 0);
+            output: out std_logic
+        );
+    end component;
+    
+
+
+    type ram_array is array (0 to 4095) of std_logic_vector(15 downto 0); -- 4096 * 16 Array
+  
     signal cell_select: std_logic_vector(4095 downto 0);
-    signal cell_outputs: std_logic_vector(65535 downto 0); -- 4096 * 16
+    signal cell_outputs: ram_array := (others => (others => '0'));
 
 begin
+
 
     decoder: DEC12to4096
         port map (
@@ -49,18 +61,24 @@ begin
                 memory_enable => cell_select(i),
                 R_flag => R_flag,
                 input_data => input_data,
-                output_data => cell_outputs((i+1)*16-1 downto i*16)
+                output_data => cell_outputs(i)
             );
     end generate;
 
-    output_mux: process(cell_select, cell_outputs)
+    OUTPUT_GEN : for i in 0 to 15 generate
+        signal selected_bits : std_logic_vector(4095 downto 0);
     begin
-        output_data <= (others => '0');
-        for i in 0 to 4095 loop
-            if cell_select(i) = '1' then
-                output_data <= cell_outputs((i+1)*16-1 downto i*16);
-            end if;
-        end loop;
-    end process;
+        selected_bits <= (others => '0'); -- Initialize
+        
+        GEN_BITS : for j in 0 to 4095 generate
+            selected_bits(j) <= cell_outputs(j)(i);
+        end generate;
+        
+        and_out: OR_4096 port map(
+            input => selected_bits,
+            output => output_data(i)
+        );
+    end generate;
+    
 
 end architecture structural;
