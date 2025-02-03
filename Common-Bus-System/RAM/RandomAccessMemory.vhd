@@ -48,7 +48,7 @@ architecture structural of RAM is
 
 
     signal cell_select: std_logic_vector(4095 downto 0);
-    signal test: std_logic_vector(4095 downto 0);
+    -- signal test: std_logic_vector(4095 downto 0);
 
 begin
 

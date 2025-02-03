@@ -6,11 +6,15 @@ vcom RAM/RandomAccessMemory.vhd
 vsim work.RAM
 
 add wave *
-add wave test
+# add wave test
+add wave cell_outputs
 
-force memory_enable 1
+
+force memory_enable 1 0
 force R_flag 0 0
 force addr  12'h8 0 
 force input_data 16'h21 0
 force R_flag 1 10
+
+examine cell_outputs(8)
 run 10

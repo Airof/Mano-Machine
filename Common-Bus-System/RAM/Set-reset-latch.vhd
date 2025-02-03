@@ -8,20 +8,22 @@ use IEEE.std_logic_1164.all;
 --will be used as memory cells  
 entity SR is
     port (
-        S,R: in std_logic;
-        Q: inout std_logic
+        S, R: in std_logic;
+        Q: out std_logic
     );
 end entity SR;
 
-architecture behavorial of SR is
-    signal notQ: std_logic := '0';
+architecture structural of SR is
+    signal notQ: std_logic := '0';  -- Initialize notQ to '0'
+    signal Q_int: std_logic := '1'; -- Internal signal for Q, initialized to '1'
 begin
+    -- Concurrent assignments
+    Q_int <= not (R or notQ);
+    notQ <= not (S or Q_int);
 
-    Q <= R nor notQ;
-    notQ <= S nor Q;
-    
-    
-end architecture behavorial;
+    -- Output assignment
+    Q <= Q_int;
+end architecture structural;
 
 -- SR Latch can store data
 --
