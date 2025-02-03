@@ -16,7 +16,7 @@ end entity BC;
 architecture behavorial of BC is
 
 --used components: SR as an memory cell
-    
+
     component SR is 
     port (
         S,R: in std_logic;

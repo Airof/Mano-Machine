@@ -14,6 +14,9 @@ entity ShiftLR is
 end entity ShiftLR;
 
 architecture Behavorial of ShiftLR is
+
+-- used components => MUX2to1
+-- used signals => mux_input for padding(line 70) 
     component MUX2to1 is
          port (
             input : in std_logic_vector(1 downto 0);
@@ -62,3 +65,14 @@ end architecture;
 --  --------------------------------
 --      0      | 0100110011001100  (Right shift)
 --      1      | 0011001100110010  (Left shift)
+
+
+-- why padding?
+-- generate is used  for code simplicity
+-- the first and last input of the 16 MUXs used in shiftLR are const '0'
+-- in for generate we can't have const and variables at the same time (same as other languages)
+-- for eaxample in python:
+--      for i in range(10): print value(i)
+-- value(i) can't set to a const in for and this has to be done before the fore
+-- vhdl is static language so the size of the ports cant change  
+-- so the solution is to define a variable(signal) with length of 18(16+2) to store values Il-A-Ir in itself temporerly
