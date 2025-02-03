@@ -14,15 +14,30 @@ entity SR is
 end entity SR;
 
 architecture structural of SR is
-    signal notQ: std_logic := '0';  -- Initialize notQ to '0'
-    signal Q_int: std_logic := '1'; -- Internal signal for Q, initialized to '1'
+    signal notQ: std_logic ;  -- Initialize notQ to '0'
+    signal Q_int: std_logic; -- Internal signal for Q, initialized to '1'
+    -- signal state: std_logic := '0';
 begin
-    -- Concurrent assignments
-    Q_int <= not (R or notQ);
-    notQ <= not (S or Q_int);
 
-    -- Output assignment
+    --WARNING: Recursive loops cause infinite need of calculation in simulations 
+    -- the "after" keywords is for handling that and breaking the infinite loop
+    notQ <= (R or Q_int) after 1 ps;  -- Delta delay breaks loop
+    Q_int <= (S or notQ) after 1 ps;  -- Delta delay breaks loop
     Q <= Q_int;
+-- the latch above is reversed. WHY?
+    
+    -- -- limitation of simulation calculations for Concurrent assignments
+    -- -- one line assignment
+    -- state <= not (R or (not (S or state)));
+    -- Q <= state;
+
+
+    -- -- Concurrent assignments
+    -- Q_int <= not (R or notQ);
+    -- notQ <= not (S or Q_int);
+
+    -- -- Output assignment
+    -- Q <= Q_int;
 end architecture structural;
 
 -- SR Latch can store data
