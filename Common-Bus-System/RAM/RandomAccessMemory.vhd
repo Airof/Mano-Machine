@@ -41,13 +41,18 @@ architecture structural of RAM is
 
 
     type ram_array is array (0 to 4095) of std_logic_vector(15 downto 0); -- 4096 * 16 Array
-  
-    signal cell_select: std_logic_vector(4095 downto 0);
     signal cell_outputs: ram_array := (others => (others => '0'));
+    
+    type sel_array is array (0 to 15) of std_logic_vector(4095 downto 0);
+    signal selected_bits_array : sel_array := (others => (others => '0')); -- Declare outside generate
+
+
+    signal cell_select: std_logic_vector(4095 downto 0);
+    signal test: std_logic_vector(4095 downto 0);
 
 begin
 
-
+    -- k
     decoder: DEC12to4096
         port map (
             addr => addr,
@@ -55,7 +60,10 @@ begin
             enable => memory_enable
         );
 
+
+
     gen_cells: for i in 0 to 4095 generate
+        -- k
         cell: MemoryCell
             port map (
                 memory_enable => cell_select(i),
@@ -65,20 +73,21 @@ begin
             );
     end generate;
 
+
     OUTPUT_GEN : for i in 0 to 15 generate
-        signal selected_bits : std_logic_vector(4095 downto 0);
+        -- signal selected_bits : std_logic_vector(4095 downto 0);--tst
     begin
-        selected_bits <= (others => '0'); -- Initialize
         
-        GEN_BITS : for j in 0 to 4095 generate
-            selected_bits(j) <= cell_outputs(j)(i);
+        GEN_BITS : for j in 4095 downto 0 generate
+            selected_bits_array(i)(j) <= cell_outputs(j)(i);
         end generate;
         
         and_out: OR_4096 port map(
-            input => selected_bits,
+            input => selected_bits_array(i),
             output => output_data(i)
         );
     end generate;
-    
+
+
 
 end architecture structural;
