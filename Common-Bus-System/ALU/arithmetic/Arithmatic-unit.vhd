@@ -6,7 +6,7 @@ use IEEE.std_logic_1164.all;
 -- a normal calculator
 -- can calculate add sub 
 
-entity Arithmatic is
+entity Arithmetic is
     port (
         A, B: in std_logic_vector(15 downto 0);
         sel: in std_logic_vector(1 downto 0);
@@ -15,10 +15,10 @@ entity Arithmatic is
         cout: out std_logic;
         D: out std_logic_vector(15 downto 0)
     );
-end entity Arithmatic;
+end entity Arithmetic;
 
 
-architecture structural of Arithmatic is
+architecture structural of Arithmetic is
 
 -- Components:
 --   - FullAdder:  A 1-bit full adder used to build a 16-bit adder.

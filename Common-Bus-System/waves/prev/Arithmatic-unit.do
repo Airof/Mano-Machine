@@ -1,7 +1,7 @@
 vcom ALU/FullAdder.vhd
 vcom ALU/MUX4to1.vhd
-vcom ALU/Arithmatic-unit.vhd
-vsim work.Arithmatic
+vcom ALU/Arithmetic-unit.vhd
+vsim work.Arithmetic
 add wave *
 
 

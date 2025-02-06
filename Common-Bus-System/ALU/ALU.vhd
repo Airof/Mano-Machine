@@ -18,7 +18,7 @@ end entity ALU;
 architecture structural of ALU is
 -- ==========================================================================|
 -- Components:                                                               |               
--- - Arithmatic: Handles addition, subtraction, increment, and decrement.    |                     
+-- - Arithmetic: Handles addition, subtraction, increment, and decrement.    |                     
 -- - LOGIC: Performs bitwise operations (AND, OR, XOR, NOT).                 |                
 -- - ShiftLR: Manages logical left and right shifts.                         |                       
 -- - MUX4to1: Selects the final output based on S(3:2).                      |                   
@@ -29,7 +29,7 @@ architecture structural of ALU is
 -- - shift_val_L: Stores left shift results.                                 |           
 -- - shift_val_R: Stores right shift results.                                |                
 -- ==========================================================================|
-    component Arithmatic is
+    component Arithmetic is
         port (
             A, B: in std_logic_vector(15 downto 0);
             sel: in std_logic_vector(1 downto 0);
@@ -38,7 +38,7 @@ architecture structural of ALU is
             cout: out std_logic;
             D: out std_logic_vector(15 downto 0)
             );
-        end component Arithmatic;
+        end component Arithmetic;
     
 
     component LOGIC is
@@ -75,8 +75,8 @@ architecture structural of ALU is
 begin
 
     
-    -- this block handles the mathmatical(Arithmatic) calculations
-    Arithmatic_block: Arithmatic port map(
+    -- this block handles the mathmatical(Arithmetic) calculations
+    Arithmetic_block: Arithmetic port map(
         A => A,
         B => B,
         sel => S(1 downto 0),
@@ -131,7 +131,7 @@ end architecture structural;
 -- Operation:
 --   - The ALU performs arithmetic, logic, and shift operations.
 --   - It consists of three main functional blocks:
---       1. Arithmetic block (Arithmatic): Handles addition, subtraction, etc.
+--       1. Arithmetic block (Arithmetic): Handles addition, subtraction, etc.
 --       2. Logic block (LOGIC): Performs bitwise AND, OR, XOR, and NOT.
 --       3. Shift block (ShiftLR): Performs left and right logical shifts.
 --   - A 4-to-1 multiplexer selects the final output based on the upper two bits of S.
@@ -176,7 +176,7 @@ end architecture structural;
 -- ==================================================
 -- Used Components:
 -- ==================================================
--- 1. Arithmatic:
+-- 1. Arithmetic:
 --    - Performs addition, subtraction, increment, and decrement.
 --    - Inputs: A, B (16-bit), sel (2-bit), cin (1-bit).
 --    - Outputs: D (16-bit), cout (1-bit).

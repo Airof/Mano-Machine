@@ -4,7 +4,7 @@ vcom ALU/MUX4to1.vhd
 vcom ALU/Logic-unitX1.vhd
 vcom ALU/Logic-unit.vhd
 vcom ALU/FullAdder.vhd
-vcom ALU/Arithmatic-unit.vhd
+vcom ALU/Arithmetic-unit.vhd
 
 vsim work.ALU
 add wave *  

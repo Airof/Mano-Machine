@@ -3,7 +3,7 @@ use IEEE.std_logic_1164.all;
 
 entity reg8 is
     generic(
-        size: integer := 7
+        size: integer := n --change n to any nomber and It will become a register
     );
     port(
         Count, load : in std_logic;
