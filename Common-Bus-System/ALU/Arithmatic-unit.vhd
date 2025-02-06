@@ -18,7 +18,7 @@ entity Arithmatic is
 end entity Arithmatic;
 
 
-architecture Behavorial of Arithmatic is
+architecture structural of Arithmatic is
 
 -- Components:
 --   - FullAdder:  A 1-bit full adder used to build a 16-bit adder.
@@ -75,7 +75,7 @@ begin
 
 
 
-end architecture Behavorial;
+end architecture structural;
 
 
 

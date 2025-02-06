@@ -11,7 +11,7 @@ entity FullAdder is
     );
 end entity FullAdder;
 
-architecture Behavorial of FullAdder is
+architecture structural of FullAdder is
     
 begin
     
@@ -23,7 +23,7 @@ begin
     -- Cout <= (A AND B) OR (A AND Cin) OR (B AND Cin); 
     
     
-end architecture Behavorial;
+end architecture structural;
 
 
 -- FullAdder: 1-bit full adder circuit.

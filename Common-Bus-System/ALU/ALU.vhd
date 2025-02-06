@@ -15,7 +15,7 @@ entity ALU is
 end entity ALU;
 
 
-architecture Behavorial of ALU is
+architecture structural of ALU is
 -- ==========================================================================|
 -- Components:                                                               |               
 -- - Arithmatic: Handles addition, subtraction, increment, and decrement.    |                     
@@ -122,7 +122,7 @@ begin
     end generate;
 
     
-end architecture Behavorial;
+end architecture structural;
 
 
 -- ALU: 16-bit Arithmetic and Logic Unit (ALU)

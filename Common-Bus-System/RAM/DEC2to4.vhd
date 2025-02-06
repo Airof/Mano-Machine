@@ -12,7 +12,7 @@ entity DEC2to4 is
 end entity DEC2to4;
 
 
-architecture Behavorial of DEC2to4 is
+architecture structural of DEC2to4 is
     
 begin
     
@@ -22,7 +22,7 @@ begin
     Y(3) <= enable and W(1) and W(0);
      
     
-end architecture Behavorial;
+end architecture structural;
 
 
 -- 2-to-4 Decoder Truth Table:

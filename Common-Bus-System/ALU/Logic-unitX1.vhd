@@ -14,7 +14,7 @@ entity logicX1 is
     );
 end entity logicX1;
 
-architecture Behavorial of LogicX1 is
+architecture structural of LogicX1 is
 
 -- component used => MUX4to1 for selecting operatins
 -- signals used => opr for sending the operation values to selector
@@ -45,7 +45,7 @@ begin
         q => ei
     );
     
-end architecture Behavorial;
+end architecture structural;
 
 
 

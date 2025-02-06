@@ -13,7 +13,7 @@ entity ShiftLR is
     );
 end entity ShiftLR;
 
-architecture Behavorial of ShiftLR is
+architecture structural of ShiftLR is
 
 -- used components => MUX2to1
 -- used signals => mux_input for padding(line 70) 

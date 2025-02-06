@@ -10,7 +10,7 @@ entity OR_16 is
     );
 end entity OR_16;
 
-architecture Behavoral of OR_16 is
+architecture structural of OR_16 is
     
 
 begin
@@ -22,4 +22,4 @@ begin
 
     
     
-end architecture Behavoral;
+end architecture structural;

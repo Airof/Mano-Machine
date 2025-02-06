@@ -13,7 +13,7 @@ entity BC is
     );
 end entity BC;
 
-architecture behavorial of BC is
+architecture structural of BC is
 
 --used components: SR as an memory cell
 
@@ -37,7 +37,7 @@ begin
     
     
     
-end architecture behavorial;
+end architecture structural;
 
 
 --                    block diagram

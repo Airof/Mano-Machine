@@ -10,7 +10,7 @@ entity SR is
     );
 end entity SR;
 
-architecture SelectBased of SR is
+architecture Behave of SR is
     signal internal_Q : std_logic := '0';  -- Initialized state
 begin
     -- Explicit type conversion for concatenation
@@ -22,4 +22,4 @@ begin
             'X'       when others;-- Invalid (11)
 
     Q <= internal_Q;
-end architecture SelectBased;
+end architecture Behave;

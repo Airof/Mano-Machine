@@ -15,7 +15,7 @@ entity DEC12to4096 is
 end entity DEC12to4096;
 
 
-architecture Behavorial of DEC12to4096 is
+architecture structural of DEC12to4096 is
 
 -- used components are DEC4to16
 -- used signals are level1_enables // level2_enables
@@ -64,7 +64,7 @@ begin
         );
     end generate GEN_Level3;
 
-end architecture Behavorial;
+end architecture structural;
 
 
 

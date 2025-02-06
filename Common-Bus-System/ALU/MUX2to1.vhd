@@ -12,13 +12,13 @@ entity MUX2to1 is
     );
 end entity MUX2to1;
 
-architecture Behavorial of MUX2to1 is
+architecture structural of MUX2to1 is
     
 begin
 
     q <= (input(0) and (NOT sel)) or (input(1) and sel);
     
-end architecture Behavorial;
+end architecture structural;
 
 -- MUX2to1 is a multiplexer that selects one of the two input signals
 -- based on the value of the selector 'sel'.

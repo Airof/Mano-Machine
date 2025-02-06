@@ -14,7 +14,7 @@ entity DEC4to16 is
 end entity DEC4to16;
 
 
-architecture Behavorial of DEC4to16 is
+architecture structural of DEC4to16 is
     component DEC2to4 is
         port (
             W: in std_logic_vector(1 downto 0);
@@ -85,7 +85,7 @@ begin
 
 
 
-end architecture Behavorial;
+end architecture structural;
 
 
 -- Truth Table for 4-to-16 Decoder:

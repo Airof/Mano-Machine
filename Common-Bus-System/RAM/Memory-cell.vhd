@@ -12,7 +12,7 @@ entity MemoryCell is
     );
 end entity MemoryCell;
 
-architecture behavorial of MemoryCell is
+architecture structural of MemoryCell is
     component BC is
         port (
             cell_input, R, sel: in std_logic;
@@ -32,6 +32,6 @@ begin
         );
     end generate;
     
-end architecture behavorial;
+end architecture structural;
 
 

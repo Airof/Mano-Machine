@@ -12,7 +12,7 @@ entity LOGIC is
     );
 end entity LOGIC;
 
-architecture Behavorial of LOGIC is
+architecture structural of LOGIC is
 
 -- used components => logicX1 for calculations of each Bit
 
@@ -39,7 +39,7 @@ begin
     
     
     
-end architecture Behavorial;
+end architecture structural;
 
 -- LOGIC: 16-bit logical operation unit using 1-bit logic elements.
 --

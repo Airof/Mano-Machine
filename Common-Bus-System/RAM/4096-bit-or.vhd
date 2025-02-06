@@ -12,7 +12,7 @@ end entity OR_4096;
 
 
 
-architecture Behavorial of OR_4096 is
+architecture structural of OR_4096 is
     
     component OR_16 is
         port (
@@ -45,4 +45,4 @@ begin
         output => output
     );
     
-end architecture Behavorial;
+end architecture structural;

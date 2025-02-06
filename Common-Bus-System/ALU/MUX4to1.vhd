@@ -12,7 +12,7 @@ entity MUX4to1 is
     );
 end entity MUX4to1;
 
-architecture Behavorial of MUX4to1 is
+architecture structural of MUX4to1 is
     
 
     -- using logical getes
@@ -38,7 +38,7 @@ begin
 
     -- using logic design
     
-end architecture Behavorial;
+end architecture structural;
 
 
 -- MUX2to1 is a multiplexer that selects one of the two input signals
