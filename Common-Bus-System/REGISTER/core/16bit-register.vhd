@@ -1,7 +1,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity reg8 is
+entity reg16 is
     generic(
         size: integer := 16
     );
@@ -16,7 +16,7 @@ end entity;
 
 
 
-architecture structural of reg8 is 
+architecture structural of reg16 is 
 
     component JKff is 
         port(
