@@ -7,10 +7,12 @@ entity seq_counter is
         size: integer := 4
     );
     port (
-      increament: in std_logic;
+      increment: in std_logic;
       clear: in std_logic;
       clk: std_logic;
-      c_out: out std_logic
+      A_out: out std_logic_vector(size-1 downto 0);
+    --   A_out: out std_logic_vector(3 downto 0);
+      c_out: out std_logic -- use if needed carry
     );
 end entity seq_counter;
 
@@ -31,7 +33,7 @@ begin
     
 
 
-    toggle_sig(0) <= increament;
+    toggle_sig(0) <= increment;
     toggle_GEN : for i in 1 to size generate
         toggle_sig(i) <= out_sig(i-1) and toggle_sig(i-1);
     end generate;
@@ -46,6 +48,7 @@ begin
         );
     end generate;
 
-    c_out <= toggle_sig(size);
+    A_out <= out_sig; 
+    c_out <= toggle_sig(size); -- use if needed carry
     
 end architecture structural;
