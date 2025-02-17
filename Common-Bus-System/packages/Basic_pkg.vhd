@@ -101,8 +101,16 @@ package Bus_Pkg is
             q : out std_logic
         );
     end component MUX2to1;
-    
-    
+
+    -- the file below is still not logic based
+
+    component JKff is 
+        port(
+            J,K,CLK,Clear : in std_logic;
+            y : out std_logic
+        );
+    end component;
+
 
 
         -- Define the record type inside the architecture

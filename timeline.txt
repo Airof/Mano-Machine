@@ -1,0 +1,17 @@
+
+After finishing the project
+
+1.I should reconstructing the Registers with generic so I only have one file and use the generic in order 
+to change the size of the Registers
+
+
+2.I shoud make packages instead of components
+
+3. I should check if I can convers any signal to record for cleaning my code
+
+
+4. making my port maps better
+4.1 using generic map
+      clk_gen : clk_generator
+    generic map (CLK_PERIOD => 1 ns)  -- Optional: Custom period
+    port map (clk => my_clk);

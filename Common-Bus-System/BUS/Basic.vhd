@@ -39,9 +39,10 @@ architecture structural of Mano_machine is
     signal D: std_logic_vector(7 downto 0);  --control signal 
     signal B: std_logic_vector(11 downto 0); --regisrter and I/O
     signal I: std_logic;                     --regisrter and I/O
-    signal R: std_logic;                     -- intrupt
 
-    signal IEN: std_logic;                   -- intrupt enable
+    signal R, J_R, K_R: std_logic;                     -- intrupt
+
+    signal IEN, J_IEN, K_IEN: std_logic;                   -- intrupt enable
     signal FGO, FGI: std_logic;              -- I/O flags
 
     signal TC: time_control;
@@ -124,7 +125,9 @@ begin
 -- #########################################################
 -- $$$$$$ choose and decode the selectors for Bus $$$$$$$$$$
 
-    -- X(0) <= '0'; -- not selected 
+    --  X(0) <= '0'; -- not selected 
+
+    X(0) <= '0';
 
     X(1) <= '0'; -- AR
 
@@ -138,7 +141,7 @@ begin
 
     X(6) <= TC.RT1; -- TR
 
-    X(7) <= TC.nRT1 OR TC.ND7IT3; -- MEMORY//also use as read
+    X(7) <= TC.nRT1 OR TC.ND7IT3 OR TC.D0T4; -- MEMORY//also use as read// eq M[AR]
 
 
 
@@ -161,7 +164,7 @@ begin
 
     load.DR <= '0';
     
-    load.AC <= '0';
+    load.AC <= TC.D0T4;
     
     load.IR <= TC.nRT1;
     
@@ -204,12 +207,29 @@ begin
 
 -- Handling the intrupt flags
 
-    -- intrupt check
-    R <= ( ((not (T(0) OR T(1))) OR T(2)) and IEN and (FGI OR FGO) ) OR ( R and TC.RT2 );
+    J_R <= (not (T(0) or T(1) or T(2))) and IEN and (FGI or FGO);
+    K_R <= R and T(2);
+
+    intrupt_flag: entity work.JKFF
+        port map (
+            J => J_R,
+            K => K_R,
+            clk => clk,
+            clear => '0',
+            y => R
+        );
 
 
     -- inrupt enable 
-    IEN <= (IEN and not TC.RT2);
+    K_IEN <= TC.pB6 OR TC.RT2;
+    IEN_val: entity work.JKFF
+        port map(
+            J => TC.pB7,
+            k => K_IEN,
+            clk => clk,
+            clear => '0',
+            y => IEN
+        );
 
 
 
